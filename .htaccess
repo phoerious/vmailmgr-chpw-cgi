@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteCond %{HTTPS} !=on
+RewriteCond %{ENV:HTTPS} !=on
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NE]
+
+Options +ExecCGI
+AddHandler cgi-script .py
+DirectoryIndex index.py
