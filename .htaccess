@@ -6,3 +6,6 @@ RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NE]
 Options +ExecCGI
 AddHandler cgi-script .py
 DirectoryIndex index.py
+
+# Don't allow access to .git folder for security reasons
+RedirectMatch 404 /\.git
