@@ -8,13 +8,8 @@ This script is specifically tailored to work on hosts at
 systems as long as virtual mail users are managed via `VMailMgr`.
 
 ## Installation
-In order to make this script executable, you need to install `python-cdb` as
-it is a required dependency:
-
-    easy_install-2.7 python-cdb
-
-After that, simply extract all the repository contents into a folder under
-your document root. No paths need to be configured. Only make sure that the
+To install the script, simply extract all the repository contents into a folder
+under your document root. No paths need to be configured. Only make sure that the
 location is reachable via HTTPS.
 
 ## Acknowledgements
@@ -23,10 +18,6 @@ See [dirkboye/mailpw_change](https://github.com/dirkboye/mailpw_change) at GitHu
 for the original source code.
 
 ## FAQ
-* *Q:* Why still Python 2.7?<br>
-  *A:* We need `python-cdb` to parse the weird binary password database.
-  Unfortunately, `python-cdb` seems to be only available for Python 2.
-
 * *Q:* Can I use the script via unencrypted HTTP?<br>
   *A:* No, HTTPS is hard-coded. So unless you change that in the code, you can't.
   And honestly, you really shouldn't.
