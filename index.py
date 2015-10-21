@@ -76,7 +76,7 @@ def main():
                 else:
                     main_content = read_template_file('fail.tpl', message='User not found or wrong password entered.')
             else:
-                main_content = read_template_file('fail.tpl', message='Passwords to not match.')
+                main_content = read_template_file('fail.tpl', message='Passwords do not match.')
         elif form_ok == False:
             main_content = read_template_file('fail.tpl', message='All fields are required.')
         else:
