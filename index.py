@@ -35,8 +35,7 @@ def check_oldpw(accountname, oldpass):
         oldhash = m.group(1)
         hashtype = m.group(2)
         salt = m.group(3)
-    except CalledProcessError as e:
-        print(e)
+    except CalledProcessError:
         return False
 
     opensslargs = ['openssl', 'passwd', '-' + hashtype, '-salt', salt, oldpass]
