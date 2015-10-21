@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import cgi, cgitb
 import re
-import sys, os, subprocess
-from subprocess import check_output, Popen, PIPE, CalledProcessError
+import sys, os
+from subprocess import check_output, Popen, PIPE, STDOUT, CalledProcessError
 from os.path import expanduser
 
 cgitb.enable()
@@ -38,11 +38,16 @@ def check_oldpw(accountname, oldpass):
     except CalledProcessError:
         return False
 
-    opensslargs = ['openssl', 'passwd', '-' + hashtype, '-salt', salt, oldpass]
-    newhash = check_output(opensslargs).strip().decode('utf-8');
+    opensslargs = ['openssl', 'passwd', '-' + hashtype, '-salt', salt, '-stdin']
+    p = Popen(opensslargs, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+    p.stdin.write(oldpass.encode('utf-8') + b'\n')
+    p.stdin.close()
+    if p.wait() == 0:
+        newhash = p.stdout.readline().strip().decode('utf-8');
 
-    if newhash == oldhash:
-        return True
+        if newhash == oldhash:
+            return True
+
     return False
 
 def generate_headers():
@@ -64,7 +69,7 @@ def main():
             if newpass == newpass2:
                 if check_oldpw(accountname, oldpass):
                     vpasswdargs = ['vpasswd', accountname]
-                    p = Popen(vpasswdargs, stdin=PIPE, stdout=PIPE, stderr=subprocess.STDOUT)   
+                    p = Popen(vpasswdargs, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
                     p.stdin.write(newpass.encode('utf-8') + b'\n')
                     p.stdin.write(newpass2.encode('utf-8') + b'\n')
                     p.stdin.close()
