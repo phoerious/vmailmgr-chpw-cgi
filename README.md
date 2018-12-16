@@ -12,6 +12,9 @@ To install the script, simply extract all the repository contents into a folder
 under your document root. No paths need to be configured. Only make sure that the
 location is reachable via HTTPS.
 
+In case you are using a U7 uberspace, you have to add a SELinux permission to allow apache to access both your home directory and the VMailMgr user database:
+`chcon -t httpd_sys_content_t ~ ~/passwd.cdb`
+
 ## Acknowledgements
 This is a majorly refined version of a script originally developed by Dirk Boye.
 See [dirkboye/mailpw_change](https://github.com/dirkboye/mailpw_change) at GitHub
@@ -33,3 +36,5 @@ for the original source code.
   policy violation. How do I fix that?<br>
   *A:* Make sure both the `index.py` as well as the containing directory have
   the permissions `0755`. Any higher permissions will usually result in that error.
+  If you have trouble finding the root cause, possibly a look at `journalctl -b`
+  will help you.
